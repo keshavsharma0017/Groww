@@ -1,6 +1,12 @@
 class Appdata {
   final String value;
   final String show;
+  
+static late String info;
+static late String timerange;
+static late String timevalue;
+static late String fdate;
+static late String tdate;
 
   Appdata({required this.value, required this.show});
 

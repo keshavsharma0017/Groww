@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:groww/constant/appdata.dart';
 import '../Servicedata/stocklist.dart';
 import 'package:groww/views/startingpage.dart';
 
@@ -35,10 +36,11 @@ class _DatapageState extends State<Datapage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Center(
+        title: Center(
             child: Text(
-          'AAPL',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+          Appdata.info,
+          style:
+              const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
         )),
       ),
       body: SafeArea(

@@ -8,8 +8,6 @@ class Startingpage extends StatefulWidget {
     super.key,
   });
   static late String? equity;
-  // static final String? fdate;
-  // static final String? tdate;
 
   @override
   State<Startingpage> createState() => _StartingpageState();
@@ -124,7 +122,9 @@ class _StartingpageState extends State<Startingpage> {
                       }).toList(),
                       onChanged: (String? value) {
                         setState(() {
-                          stock = value!;
+                          Appdata.info = value!;
+                          print(Appdata.info);
+                          stock = value;
                         });
                       },
                     ),
@@ -151,7 +151,9 @@ class _StartingpageState extends State<Startingpage> {
                       // change button value to selected value
                       onChanged: (String? value) {
                         setState(() {
-                          spam = value!;
+                          Appdata.timerange = value!;
+                          print(Appdata.timerange);
+                          spam = value;
                         });
                       },
                     ),
@@ -178,7 +180,9 @@ class _StartingpageState extends State<Startingpage> {
                       // change button value to selected value
                       onChanged: (String? value) {
                         setState(() {
-                          rangespam = value!;
+                          Appdata.timevalue = value!;
+                          print(Appdata.timevalue);
+                          rangespam = value;
                         });
                       },
                     ),
@@ -216,7 +220,10 @@ class _StartingpageState extends State<Startingpage> {
                             lastDate: DateTime(2100),
                           );
                           if (newDate == null) return;
-                          setState(() => fdate = newDate);
+                          setState(() {
+                            Appdata.fdate = newDate.toString();
+                            print(Appdata.fdate);
+                          });
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.white,
@@ -251,7 +258,10 @@ class _StartingpageState extends State<Startingpage> {
                             lastDate: DateTime(2100),
                           );
                           if (newDate == null) return;
-                          setState(() => tdate = newDate);
+                          setState(() {
+                            Appdata.tdate = newDate.toString();
+                            print(Appdata.tdate);
+                          });
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.white,
