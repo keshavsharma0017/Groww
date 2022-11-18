@@ -5,7 +5,7 @@ class Appdata {
   static String info = "AAPL";
   static String timerange = "minute";
   static String timevalue = "15";
-  static DateTime fdate = DateTime(2022, 11, 18);
+  static DateTime fdate = DateTime(2022, 11, 17);
   static DateTime tdate = DateTime(2022, 11, 18);
 
   Appdata({required this.value, required this.show});

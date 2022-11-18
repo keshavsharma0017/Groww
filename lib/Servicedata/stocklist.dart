@@ -86,7 +86,16 @@ class _StockCardState extends State<StockCard> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return const CircularProgressIndicator();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                SizedBox(
+                  height: 300,
+                ),
+                Center(child: CircularProgressIndicator()),
+              ],
+            );
           case ConnectionState.done:
             return SingleChildScrollView(
               physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
@@ -201,6 +210,8 @@ class _StockCardState extends State<StockCard> {
                 scrollDirection: Axis.vertical,
               ),
             );
+          case ConnectionState.none:
+            return const Text("Data fetch Request Exceeded");
           default:
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
