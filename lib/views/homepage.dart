@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groww/constant/appdata.dart';
 import '../Servicedata/stocklist.dart';
-import 'package:groww/views/startingpage.dart';
 
 late final String symbol;
 late final List stockList;

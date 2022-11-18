@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:groww/constant/route.dart';
-import 'dart:developer' as devtools show log;
+// import 'dart:developer' as devtools show log;
 import '../constant/appdata.dart';
 
 class Startingpage extends StatefulWidget {
@@ -14,31 +16,14 @@ class Startingpage extends StatefulWidget {
 }
 
 class _StartingpageState extends State<Startingpage> {
-  final TextEditingController _toDate = TextEditingController();
-  final TextEditingController _fromDate = TextEditingController();
-
-  @override
-  void initState() {
-    _fromDate.text = "";
-    _toDate.text = "";
-    super.initState();
-  }
-
-  // final _validationKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    final newlist = appdata1.map((Appdata) {
-      final String show = Appdata.show;
-      return Text(show);
-    }).toList();
+    // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
 
-    DateTime fdate = DateTime(2022, 11, 18);
-    DateTime tdate = DateTime(2022, 12, 18);
     // Initial Selected Value
-    String stock = 'Stocks';
-    String spam = 'Time';
-    String rangespam = 'range';
+    String? stock = 'Stocks';
+    String? spam = 'Time';
+    String? rangespam = 'range';
 
     // List of items in our dropdown menu
     var stocks = [
@@ -73,8 +58,6 @@ class _StartingpageState extends State<Startingpage> {
       "45",
       "60",
     ];
-    String val = newlist[0].toString();
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 95, 111, 255),
       body: SafeArea(
@@ -110,23 +93,23 @@ class _StartingpageState extends State<Startingpage> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: DropdownButton(
-                      value: stock,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      elevation: 16,
-                      items: stocks.map((String items) {
+                    child: DropdownButton<String>(
+                      value: Appdata.info,
+                      items: stocks.map((String item) {
                         return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
+                          value: item,
+                          child: Text(item),
                         );
                       }).toList(),
                       onChanged: (String? value) {
-                        setState(() {
+                        return setState(() {
                           Appdata.info = value!;
-                          print(Appdata.info);
                           stock = value;
                         });
                       },
+                      underline: Container(),
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      elevation: 16,
                     ),
                   ),
                   ElevatedButton(
@@ -138,7 +121,8 @@ class _StartingpageState extends State<Startingpage> {
                       ),
                     ),
                     child: DropdownButton(
-                      value: spam,
+                      underline: Container(),
+                      value: Appdata.timerange,
                       icon: const Icon(Icons.keyboard_arrow_down),
                       elevation: 16,
                       items: time.map((String items) {
@@ -152,7 +136,6 @@ class _StartingpageState extends State<Startingpage> {
                       onChanged: (String? value) {
                         setState(() {
                           Appdata.timerange = value!;
-                          print(Appdata.timerange);
                           spam = value;
                         });
                       },
@@ -167,7 +150,8 @@ class _StartingpageState extends State<Startingpage> {
                       ),
                     ),
                     child: DropdownButton(
-                      value: rangespam,
+                      underline: Container(),
+                      value: Appdata.timevalue,
                       icon: const Icon(Icons.keyboard_arrow_down),
                       elevation: 16,
                       items: range.map((String items) {
@@ -181,7 +165,6 @@ class _StartingpageState extends State<Startingpage> {
                       onChanged: (String? value) {
                         setState(() {
                           Appdata.timevalue = value!;
-                          print(Appdata.timevalue);
                           rangespam = value;
                         });
                       },
@@ -215,13 +198,14 @@ class _StartingpageState extends State<Startingpage> {
                         onPressed: () async {
                           DateTime? newDate = await showDatePicker(
                             context: context,
-                            initialDate: fdate,
+                            initialDate: Appdata.fdate,
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2100),
                           );
                           if (newDate == null) return;
                           setState(() {
-                            Appdata.fdate = newDate.toString();
+                            Appdata.fdate = newDate;
+                            // Appdata.fdate = newDate.toString();
                             print(Appdata.fdate);
                           });
                         },
@@ -229,7 +213,7 @@ class _StartingpageState extends State<Startingpage> {
                             backgroundColor: Colors.white,
                             minimumSize: const Size(100, 30)),
                         child: Text(
-                          "${fdate.day}/${fdate.month}/${fdate.year}",
+                          "${Appdata.fdate.year.toString()}-${Appdata.fdate.month.toString()}-${Appdata.fdate.day.toString()}",
                           style: const TextStyle(
                             color: Colors.black,
                           ),
@@ -253,13 +237,14 @@ class _StartingpageState extends State<Startingpage> {
                         onPressed: () async {
                           DateTime? newDate = await showDatePicker(
                             context: context,
-                            initialDate: tdate,
+                            initialDate: Appdata.tdate,
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2100),
                           );
                           if (newDate == null) return;
                           setState(() {
-                            Appdata.tdate = newDate.toString();
+                            Appdata.tdate = newDate;
+                            // Appdata.tdate = newDate.toString();
                             print(Appdata.tdate);
                           });
                         },
@@ -268,7 +253,7 @@ class _StartingpageState extends State<Startingpage> {
                           minimumSize: const Size(100, 30),
                         ),
                         child: Text(
-                          "${tdate.day}/${tdate.month}/${tdate.year}",
+                          "${Appdata.tdate.year.toString()}-${Appdata.tdate.month.toString()}-${Appdata.tdate.day.toString()}",
                           style: const TextStyle(
                             color: Colors.black,
                           ),

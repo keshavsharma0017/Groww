@@ -1,19 +1,17 @@
 class Appdata {
   final String value;
   final String show;
-  
-static late String info;
-static late String timerange;
-static late String timevalue;
-static late String fdate;
-static late String tdate;
+
+  static String info = "AAPL";
+  static String timerange = "minute";
+  static String timevalue = "15";
+  static DateTime fdate = DateTime(2022, 11, 18);
+  static DateTime tdate = DateTime(2022, 11, 18);
 
   Appdata({required this.value, required this.show});
-
 }
 
-
-List<Appdata> appdata1=[
+List<Appdata> appdata1 = [
   Appdata(value: 'AAPL', show: 'Apple'),
   Appdata(value: 'MSFT', show: 'Microsoft'),
   Appdata(value: 'GOOGL', show: 'Google'),
@@ -29,5 +27,4 @@ List<Appdata> appdata1=[
   Appdata(value: 'META', show: 'Metaverse'),
   Appdata(value: 'TM', show: 'Toyota'),
   Appdata(value: 'BABA', show: 'Alibaba'),
-
-]; 
+];

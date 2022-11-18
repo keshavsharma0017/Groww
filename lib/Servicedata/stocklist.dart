@@ -5,7 +5,6 @@ import 'package:groww/constant/appdata.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:groww/module/stockdata.dart';
-import 'package:groww/views/startingpage.dart';
 
 final List dataList = [
   "AAPL",
@@ -36,12 +35,17 @@ class _StockCardState extends State<StockCard> {
   late Future<StockData?> fetchdata;
   List<dynamic> stockList = [];
   Future<void> fetchstock() async {
-    print('hey10');
-    // print("Appdata.info");
-    for (var i = 0; i < 15; i++) {
+    for (int i = 0; i < 14; i++) {
+      print('hey10');
+      // print("Appdata.info");
       print('hey11');
+      print(Appdata.info);
+      print(Appdata.timerange);
+      print(Appdata.timevalue);
+      print('hey5');
       final response = await http.get(Uri.parse(
-          'https://api.polygon.io/v2/aggs/ticker/${Appdata.info}/range/${Appdata.timevalue}/${Appdata.timerange}/${Appdata.fdate}/${Appdata.tdate}?adjusted=true&sort=desc&limit=120&apiKey=XHWn5rxwMg43uWADwVN1a_kiBDszlfVb'));
+          'https://api.polygon.io/v2/aggs/ticker/${Appdata.info}/range/${Appdata.timevalue}/${Appdata.timerange}/${Appdata.fdate.year.toString()}-${Appdata.fdate.month.toString()}-${Appdata.fdate.day.toString()}/${Appdata.tdate.year.toString()}-${Appdata.tdate.month.toString()}-${Appdata.tdate.day.toString()}?adjusted=true&sort=desc&limit=120&apiKey=XHWn5rxwMg43uWADwVN1a_kiBDszlfVb'));
+      print(jsonDecode(response.body));
       print('hey12');
       if (response.statusCode == 200) {
         print('hey13');
@@ -77,7 +81,7 @@ class _StockCardState extends State<StockCard> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<void>(
       future: fetchstock(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
@@ -87,7 +91,7 @@ class _StockCardState extends State<StockCard> {
             return SingleChildScrollView(
               physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
               child: ListView.builder(
-                itemCount: stockList[0].results.length,
+                itemCount: stockList.length,
                 itemBuilder: (context, index) {
                   var convo = DateTime.fromMillisecondsSinceEpoch(
                       stockList[index].results[index].t);
@@ -120,6 +124,7 @@ class _StockCardState extends State<StockCard> {
                               ],
                             ),
                             padding: const EdgeInsets.fromLTRB(10, 5, 1, 1),
+                            //  print("itemCount"),
                             child: Row(
                               children: [
                                 Container(

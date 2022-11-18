@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: const Enterpage(),
       routes: {
         homeRoute: (context) => const Datapage(),
-        searchRoute: (context) => Startingpage(),
+        searchRoute: (context) => const Startingpage(),
       },
     );
   }
