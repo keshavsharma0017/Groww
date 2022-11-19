@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:groww/constant/appdata.dart';
 import '../Servicedata/stocklist.dart';
 
-late final String symbol;
-late final List stockList;
 final List dataList = [
   "AAPL",
   "MSFT",
@@ -30,24 +28,32 @@ class Datapage extends StatefulWidget {
 }
 
 class _DatapageState extends State<Datapage> {
+  Future refresh() async {
+    setState(() {
+      const StockCard();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Center(
-            child: Text(
+        backgroundColor: const Color.fromARGB(255, 95, 111, 255),
+        title: Text(
           Appdata.info,
           style:
-              const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-        )),
+              const TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+        ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: const [
-              StockCard(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: const [
+                StockCard(),
+              ],
+            ),
           ),
         ),
       ),

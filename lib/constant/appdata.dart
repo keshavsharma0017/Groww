@@ -3,8 +3,8 @@ class Appdata {
   final String show;
 
   static String info = "AAPL";
-  static String timerange = "minute";
-  static String timevalue = "15";
+  static String timerange = "hour";
+  static String timevalue = "1";
   static DateTime fdate = DateTime(2022, 11, 17);
   static DateTime tdate = DateTime(2022, 11, 18);
 

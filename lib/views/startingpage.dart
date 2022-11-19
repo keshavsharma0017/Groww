@@ -21,13 +21,9 @@ class _StartingpageState extends State<Startingpage> {
     // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
 
     // Initial Selected Value
-    String? stock = 'Stocks';
-    String? spam = 'Time';
-    String? rangespam = 'range';
 
     // List of items in our dropdown menu
     var stocks = [
-      "Stocks",
       "AAPL",
       "MSFT",
       "GOOGL",
@@ -46,13 +42,12 @@ class _StartingpageState extends State<Startingpage> {
     ];
 
     var time = [
-      "Time",
       "minute",
       "hour",
       "day",
     ];
     var range = [
-      "range",
+      "1",
       "15",
       "30",
       "45",
@@ -104,7 +99,6 @@ class _StartingpageState extends State<Startingpage> {
                       onChanged: (String? value) {
                         return setState(() {
                           Appdata.info = value!;
-                          stock = value;
                         });
                       },
                       underline: Container(),
@@ -136,7 +130,6 @@ class _StartingpageState extends State<Startingpage> {
                       onChanged: (String? value) {
                         setState(() {
                           Appdata.timerange = value!;
-                          spam = value;
                         });
                       },
                     ),
@@ -165,7 +158,6 @@ class _StartingpageState extends State<Startingpage> {
                       onChanged: (String? value) {
                         setState(() {
                           Appdata.timevalue = value!;
-                          rangespam = value;
                         });
                       },
                     ),
@@ -266,7 +258,10 @@ class _StartingpageState extends State<Startingpage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.of(context).pushNamed(homeRoute);
+                      if (Appdata.fdate.isBefore(DateTime.now()) &&
+                          Appdata.tdate.isBefore(DateTime.now())) {
+                        Navigator.of(context).pushNamed(homeRoute);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -284,6 +279,17 @@ class _StartingpageState extends State<Startingpage> {
                   )
                 ],
               ),
+              const SizedBox(
+                height: 70,
+              ),
+              const Text(
+                '(Please wait atleast 30 seconds before making another Request)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15),
+              )
             ],
           ),
         ),

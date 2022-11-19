@@ -35,48 +35,40 @@ class _StockCardState extends State<StockCard> {
   late Future<StockData?> fetchdata;
   List<dynamic> stockList = [];
   Future<void> fetchstock() async {
-    for (int i = 0; i < 14; i++) {
-      print('hey10');
-      // print("Appdata.info");
-      print('hey11');
-      print(Appdata.info);
-      print(Appdata.timerange);
-      print(Appdata.timevalue);
-      print('hey5');
-      final response = await http.get(Uri.parse(
-          'https://api.polygon.io/v2/aggs/ticker/${Appdata.info}/range/${Appdata.timevalue}/${Appdata.timerange}/${Appdata.fdate.year.toString()}-${Appdata.fdate.month.toString()}-${Appdata.fdate.day.toString()}/${Appdata.tdate.year.toString()}-${Appdata.tdate.month.toString()}-${Appdata.tdate.day.toString()}?adjusted=true&sort=desc&limit=120&apiKey=XHWn5rxwMg43uWADwVN1a_kiBDszlfVb'));
-      print(jsonDecode(response.body));
-      print('hey12');
-      if (response.statusCode == 200) {
-        print('hey13');
-        // String values;
-        print('hey14');
-        // values = ;
-        print('hey15');
-        if (jsonDecode(response.body).isNotEmpty) {
-          // print(stockList[0].results.length);
-          print('hey2');
-          print(jsonDecode(response.body));
-          print('hey4');
-          Map<String, dynamic> map = jsonDecode(response.body);
-          print('hey5');
-          // print(stockList[0].results.length);
-          stockList.add(StockData.fromJson(map));
-        }
-
-        setState(() {
-          stockList;
-        });
-      } else {
-        throw Exception();
+    print('hey10');
+    // print("Appdata.info");
+    print('hey11');
+    print(Appdata.info);
+    print(Appdata.timerange);
+    print(Appdata.timevalue);
+    print('hey5');
+    final response = await http.get(Uri.parse(
+        'https://api.polygon.io/v2/aggs/ticker/${Appdata.info}/range/${Appdata.timevalue}/${Appdata.timerange}/${Appdata.fdate.year.toString()}-${Appdata.fdate.month.toString()}-${Appdata.fdate.day.toString()}/${Appdata.tdate.year.toString()}-${Appdata.tdate.month.toString()}-${Appdata.tdate.day.toString()}?adjusted=true&sort=desc&limit=120&apiKey=XHWn5rxwMg43uWADwVN1a_kiBDszlfVb'));
+    print(jsonDecode(response.body));
+    print('hey12');
+    if (response.statusCode == 200) {
+      print('hey13');
+      // String values;
+      print('hey14');
+      // values = ;
+      print('hey15');
+      if (jsonDecode(response.body).isNotEmpty) {
+        // print(stockList[0].results.length);
+        print('hey2');
+        print(jsonDecode(response.body));
+        print('hey4');
+        Map<String, dynamic> map = jsonDecode(response.body);
+        print('hey5');
+        // print(stockList[0].results.length);
+        stockList.add(StockData.fromJson(map));
       }
+      
+      setState(() {
+        stockList;
+      });
+    } else {
+      throw Exception();
     }
-  }
-
-  @override
-  void initState() {
-    fetchstock();
-    super.initState();
   }
 
   @override
@@ -97,55 +89,82 @@ class _StockCardState extends State<StockCard> {
               ],
             );
           case ConnectionState.done:
-            return SingleChildScrollView(
-              physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
-              child: ListView.builder(
-                itemCount: stockList.length,
-                itemBuilder: (context, index) {
-                  var convo = DateTime.fromMillisecondsSinceEpoch(
-                      stockList[index].results[index].t);
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 16,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(4, 4),
-                                  blurRadius: 10,
-                                  spreadRadius: 1,
-                                ),
-                                BoxShadow(
-                                  color: Colors.white,
-                                  offset: Offset(-4, -4),
-                                  blurRadius: 10,
-                                  spreadRadius: 1,
-                                ),
-                              ],
-                            ),
-                            padding: const EdgeInsets.fromLTRB(10, 5, 1, 1),
-                            //  print("itemCount"),
-                            child: Row(
-                              children: [
-                                Container(
-                                  // height: 80,
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 10,
+            return ListView.builder(
+              itemCount: stockList[0].resultsCount,
+              itemBuilder: (context, index) {
+                var convo = DateTime.fromMillisecondsSinceEpoch(
+                    stockList[index].results[index].t);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 16,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(4, 4),
+                                blurRadius: 10,
+                                spreadRadius: 1,
+                              ),
+                              BoxShadow(
+                                color: Colors.white,
+                                offset: Offset(-4, -4),
+                                blurRadius: 10,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 1, 1),
+                          //  print("itemCount"),
+                          child: Row(
+                            children: [
+                              Container(
+                                // height: 80,
+                                alignment: Alignment.topLeft,
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      convo.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      height: 28,
+                                    ),
+                                    Text(
+                                      "High:\$${stockList[index].results[index].h.toString()}",
+                                      style: const TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(7.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
                                       Text(
-                                        convo.toString(),
+                                        "Open:\$${stockList[index].results[index].o.toString()}",
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
@@ -153,65 +172,34 @@ class _StockCardState extends State<StockCard> {
                                         ),
                                       ),
                                       const SizedBox(
-                                        height: 28,
+                                        height: 37,
                                       ),
                                       Text(
-                                        "High:\$${stockList[index].results[index].h.toString()}",
+                                        "Close:\$${stockList[index].results[index].c.toString()}",
                                         style: const TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
+                                          color: Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(7.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Open:\$${stockList[index].results[index].o.toString()}",
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 37,
-                                        ),
-                                        Text(
-                                          "Close:\$${stockList[index].results[index].c.toString()}",
-                                          style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  );
-                },
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-              ),
+                    ),
+                  ],
+                );
+              },
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
             );
           case ConnectionState.none:
-            return const Text("Data fetch Request Exceeded");
+            return const Center(child: Text("Check Your Internet"));
           default:
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
