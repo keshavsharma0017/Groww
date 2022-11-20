@@ -18,11 +18,6 @@ class Startingpage extends StatefulWidget {
 class _StartingpageState extends State<Startingpage> {
   @override
   Widget build(BuildContext context) {
-    // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
-
-    // Initial Selected Value
-
-    // List of items in our dropdown menu
     var stocks = [
       "AAPL",
       "MSFT",
@@ -39,6 +34,15 @@ class _StartingpageState extends State<Startingpage> {
       "META",
       "TM",
       "BABA",
+      "NVDA",
+      "LLY",
+      "MA",
+      "MMM",
+      "XOM",
+      "KO",
+      "PEP",
+      "MCD",
+      "NKE",
     ];
 
     var time = [

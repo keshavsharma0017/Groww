@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-
+import 'dart:developer' as devtools show log;
 import 'dart:convert';
 import 'package:groww/constant/appdata.dart';
 import 'package:http/http.dart' as http;
@@ -35,40 +35,25 @@ class _StockCardState extends State<StockCard> {
   late Future<StockData?> fetchdata;
   List<dynamic> stockList = [];
   Future<void> fetchstock() async {
-    print('hey10');
-    // print("Appdata.info");
-    print('hey11');
     print(Appdata.info);
     print(Appdata.timerange);
     print(Appdata.timevalue);
-    print('hey5');
+
     final response = await http.get(Uri.parse(
         'https://api.polygon.io/v2/aggs/ticker/${Appdata.info}/range/${Appdata.timevalue}/${Appdata.timerange}/${Appdata.fdate.year.toString()}-${Appdata.fdate.month.toString()}-${Appdata.fdate.day.toString()}/${Appdata.tdate.year.toString()}-${Appdata.tdate.month.toString()}-${Appdata.tdate.day.toString()}?adjusted=true&sort=desc&limit=120&apiKey=XHWn5rxwMg43uWADwVN1a_kiBDszlfVb'));
     print(jsonDecode(response.body));
-    print('hey12');
+
     if (response.statusCode == 200) {
-      print('hey13');
-      // String values;
-      print('hey14');
-      // values = ;
-      print('hey15');
-      if (jsonDecode(response.body).isNotEmpty) {
-        // print(stockList[0].results.length);
-        print('hey2');
-        print(jsonDecode(response.body));
-        print('hey4');
-        Map<String, dynamic> map = jsonDecode(response.body);
-        print('hey5');
-        // print(stockList[0].results.length);
-        stockList.add(StockData.fromJson(map));
-      }
-      
-      setState(() {
-        stockList;
-      });
+      stockList.add(stockDataFromJson(response.body));
+      print(jsonDecode(response.body));
+      // if (jsonDecode(response.body).isNotEmpty) {
+      //   Map<String, dynamic> map = jsonDecode(response.body);
+      //   stockList.add(StockData.fromJson(map));
+      // }
     } else {
       throw Exception();
     }
+    devtools.log(stockList[0].resultsCount);
   }
 
   @override
@@ -93,7 +78,7 @@ class _StockCardState extends State<StockCard> {
               itemCount: stockList[0].resultsCount,
               itemBuilder: (context, index) {
                 var convo = DateTime.fromMillisecondsSinceEpoch(
-                    stockList[index].results[index].t);
+                    stockList[0].results[index].t);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -146,7 +131,7 @@ class _StockCardState extends State<StockCard> {
                                       height: 28,
                                     ),
                                     Text(
-                                      "High:\$${stockList[index].results[index].h.toString()}",
+                                      "High:\$${stockList[0].results[index].h.toString()}",
                                       style: const TextStyle(
                                         color: Colors.green,
                                         fontSize: 18,
@@ -164,7 +149,7 @@ class _StockCardState extends State<StockCard> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "Open:\$${stockList[index].results[index].o.toString()}",
+                                        "Open:\$${stockList[0].results[index].o.toString()}",
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 15,
@@ -175,7 +160,7 @@ class _StockCardState extends State<StockCard> {
                                         height: 37,
                                       ),
                                       Text(
-                                        "Close:\$${stockList[index].results[index].c.toString()}",
+                                        "Close:\$${stockList[0].results[index].c.toString()}",
                                         style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 15,
