@@ -161,7 +161,7 @@ class _StockCardState extends State<StockCard> {
                                       ),
                                       Text(
                                         "Close:\$${stockList[0].results[index].c.toString()}",
-                                        style: const TextStyle(
+git                                        style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
